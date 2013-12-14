@@ -3,23 +3,27 @@ emacs
 
 my setting file of emacs 24
 
-required packages
+required emacs lisps
 -----
-auto-async-byte-compile 
-auto-complete
-dired+
-helm
-helm-descbinds
-markdown-mode
-melpa
-multi-term
-popup
-popwin
-tabbar
-undo-tree
-undohist
-wgrep
+# package-list-packages
+* auto-async-byte-compile
+* auto-complete
+* dired+
+* helm
+* helm-descbinds
+* markdown-mode
+* melpa
+* multi-term
+* popup
+* popwin
+* tabbar
+* undo-tree
+* undohist
+* wgrep
 
+# downloaded by my self
+* rosemacs
+* vrml
 
 
 http://tokkono.cute.coocan.jp/blog/slow/index.php/programming/markdown-skills-for-github-beginners/
