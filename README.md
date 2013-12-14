@@ -89,19 +89,3 @@ Dual licensed under the [MIT license][MIT] and [GPL license][GPL].
 [Apache]: http://www.apache.org/licenses/LICENSE-2.0
 [MIT]: http://www.opensource.org/licenses/mit-license.php
 [GPL]: http://www.gnu.org/licenses/gpl.html
-
-
-  auto-async-byte... 20130824.... installed  Automatically byte-compile when saved
-  auto-complete      20131128.233 installed  Auto Completion for GNU Emacs
-  dired+             20131205.... installed  Extensions to Dired.
-  helm               20131214.221 installed  Helm is an Emacs incremental and narrowing framework
-  helm-descbinds     20131102.901 installed  Yet Another `describe-bindings' with `helm'.
-  markdown-mode      20131210.700 installed  Emacs Major mode for Markdown-formatted text files
-  melpa              20130815.... installed  special handling for the MELPA repository
-  multi-term         20130108.... installed  Managing multiple terminal buffers in Emacs.
-  popup              20130901.... installed  Visual Popup User Interface
-  popwin             20130329.435 installed  Popup Window Manager.
-  tabbar             20131106.... installed  No description available.
-  undo-tree          20131118.... installed  Treat undo history as a tree
-  undohist           20110331.... installed  Persistent Undo History for GNU Emacs
-  wgrep              20131209.659 installed  Writable grep buffer and apply the changes to files
