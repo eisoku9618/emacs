@@ -8,9 +8,8 @@
 ;;       (message "%s: %d msec" (ad-get-arg 0) time))))
 
 ;; load path
-(mapcar #'(lambda (x) (add-to-list 'load-path x))
-        (list "~/.emacs.d/my_elisp/rosemacs"
-              "~/.emacs.d/my_elisp/vrml"))
+(add-to-list 'load-path "~/.emacs.d/my_elisp/rosemacs")
+(add-to-list 'load-path "~/.emacs.d/my_elisp/vrml")
 
 ;; trivial setting
 (progn
@@ -32,7 +31,7 @@
     )
   (progn
     (show-paren-mode 1)			;hilight a set of ()
-    (setq show-paren-delay 0)		;the delay until a set of () is highlighted
+    (setq show-paren-delay 0) ;the delay until a set of () is highlighted
     (set-face-background 'show-paren-match-face "RoyalBlue1")
     (set-face-background 'show-paren-mismatch-face "Red")
     (set-face-foreground 'show-paren-mismatch-face "black"))
@@ -90,7 +89,6 @@
     )
 
   (when (require 'tabbar nil t)
-    (print "fuga")
     (tabbar-mode)
     (setq tabbar-buffer-list-function
           #'(lambda ()
@@ -108,6 +106,8 @@
                             (buffer-list)))))
     (global-set-key [(C M f)] 'tabbar-forward)
     (global-set-key [(C M b)] 'tabbar-backward)
+    (global-set-key [(M right)] 'tabbar-forward)
+    (global-set-key [(M left)] 'tabbar-backward)
     (tabbar-mwheel-mode nil)
     (setq tabbar-buffer-groups-function nil)
     (setq tabbar-separator '(1.5))
@@ -147,15 +147,16 @@
         (invoke-rosemacs)
         (global-set-key [(C x) (C r)] ros-keymap)))
 
-  ;; (when (require 'auto-async-byte-compile nil t)
-  ;;   ;(setq auto-async-byte-compile-exclude-files-regexp "init.el")
-  ;;   (add-hook 'emacs-lisp-mode-hook 'enable-auto-async-byte-compile-mode))
+  (when (require 'auto-async-byte-compile nil t)
+    ;(setq auto-async-byte-compile-exclude-files-regexp "init.el")
+    (add-hook 'emacs-lisp-mode-hook 'enable-auto-async-byte-compile-mode))
 
   (when (require 'undohist nil t) (undohist-initialize))
   (when (require 'undo-tree nil t) (global-undo-tree-mode)) ;C-x u
   (when (require 'popwin nil t)
+    ;; (add-to-list 'display-buffer-alist 'popwin:display-buffer)
     (setq display-buffer-function 'popwin:display-buffer)
-    (add-to-list 'popwin:special-display-config '("^\*helm .+\*$" :regexp t :height 0.4)))
+    (add-to-list 'popwin:special-display-config '("^\*helm .+\*$" :regexp t :height 0.2)))
   (when (require 'uniquify nil t) (setq uniquify-buffer-name-style 'post-forward-angle-brackets))
   (when (require 'multi-term nil t) (setq multi-term-program "/bin/bash"))
   )
@@ -215,10 +216,6 @@
   ;; (global-set-key [(C x) (C f)] 'helm-find-files)
   (global-set-key [(M x)] 'helm-M-x)
   (global-set-key [(M y)] 'helm-show-kill-ring)
-  ;; (global-set-key [(C M p)] 'windmove-up)
-  ;; (global-set-key [(C M n)] 'windmove-down)
-  ;; (global-set-key [(C M f)] 'windmove-right)
-  ;; (global-set-key [(C M b)] 'windmove-left)
   )
 
 ;; fix emacs bag
