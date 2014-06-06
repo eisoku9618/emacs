@@ -8,7 +8,6 @@
 ;;       (message "%s: %d msec" (ad-get-arg 0) time))))
 
 ;; load path
-(add-to-list 'load-path "~/.emacs.d/my_elisp/rosemacs")
 (add-to-list 'load-path "~/.emacs.d/my_elisp/vrml")
 
 ;; trivial setting
@@ -54,11 +53,12 @@
   (progn                                ;cua mode enable
     (cua-mode t)
     (setq cua-enable-cua-keys nil))
-  (progn                                ;load environment value
+  (let ((fn "/tmp/shellenv.el"))        ;load environment value
     ;; See http://d.hatena.ne.jp/syohex/20111117/1321503477
-    ;; (load-file (expand-file-name "~/.emacs.d/shellenv.el"))
-    (load-file (expand-file-name "/tmp/shellenv.el"))
-    (dolist (path (reverse (split-string (getenv "PATH") ":"))) (add-to-list 'exec-path path)))
+    (when (file-exists-p fn)
+      (load-file (expand-file-name "/tmp/shellenv.el"))
+      (dolist (path (reverse (split-string (getenv "PATH") ":")))
+        (add-to-list 'exec-path path))))
   (cd (decode-coding-string default-directory file-name-coding-system)) ;Japanese setting. is it nesessary?
   ;; clipboard
   (if (display-graphic-p)
