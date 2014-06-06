@@ -16,7 +16,7 @@
   (setq inhibit-startup-message t)
   (setq inhibit-splash-screen t)
   (tool-bar-mode 0)
-  (menu-bar-mode 0)
+  (menu-bar-mode -1)
   (progn
     (setq visible-bell t)
     (setq ring-bell-function 'ignore))
@@ -56,7 +56,8 @@
     (setq cua-enable-cua-keys nil))
   (progn                                ;load environment value
     ;; See http://d.hatena.ne.jp/syohex/20111117/1321503477
-    (load-file (expand-file-name "~/.emacs.d/shellenv.el"))
+    ;; (load-file (expand-file-name "~/.emacs.d/shellenv.el"))
+    (load-file (expand-file-name "/tmp/shellenv.el"))
     (dolist (path (reverse (split-string (getenv "PATH") ":"))) (add-to-list 'exec-path path)))
   (cd (decode-coding-string default-directory file-name-coding-system)) ;Japanese setting. is it nesessary?
   ;; clipboard
@@ -142,7 +143,8 @@
     )
 
   ;; Load the library and start it up
-  (if (file-exists-p (concat (getenv "HOME") "/ros"))
+  ;; (if (file-exists-p (concat (getenv "HOME") "/ros"))
+  (if (getenv "ROS_DISTRO")
       (when (require 'rosemacs nil t)
         (invoke-rosemacs)
         (global-set-key [(C x) (C r)] ros-keymap)))
@@ -151,7 +153,7 @@
     ;(setq auto-async-byte-compile-exclude-files-regexp "init.el")
     (add-hook 'emacs-lisp-mode-hook 'enable-auto-async-byte-compile-mode))
 
-  (when (require 'undohist nil t) (undohist-initialize))
+  (when (require 'undohist nil t) (undohist-initialize) (setq undohist-directory "/tmp/"))
   (when (require 'undo-tree nil t) (global-undo-tree-mode)) ;C-x u
   (when (require 'popwin nil t)
     ;; (add-to-list 'display-buffer-alist 'popwin:display-buffer)
