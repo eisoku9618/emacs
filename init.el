@@ -1,15 +1,3 @@
-;; (defadvice require (around require-benchmark activate)
-;;   (let* ((before (current-time))
-;;          (result ad-do-it)
-;;          (after  (current-time))
-;;          (time (+ (* (- (nth 1 after) (nth 1 before)) 1000)
-;;                   (/ (- (nth 2 after) (nth 2 before)) 1000))))
-;;     (when (> time 10)
-;;       (message "%s: %d msec" (ad-get-arg 0) time))))
-
-;; load path
-(add-to-list 'load-path "~/.emacs.d/my_elisp/vrml")
-
 ;; trivial setting
 (progn
   (setq inhibit-startup-message t)
@@ -20,62 +8,26 @@
     (setq visible-bell t)
     (setq ring-bell-function 'ignore))
   (progn
-    (setq scroll-conservatively 1)	;C-n C-p
-    (setq next-screen-context-lines 0)	;C-v M-v
-    (setq next-line-add-newlines nil)	;do not add newlines at the end of files by DownArrow key
+    (setq scroll-conservatively 1);C-n C-p
+    (setq next-screen-context-lines 0);C-v M-v
     )
   (progn
-    (setq backup-inhibited t)		;do not create backup files
-    (setq delete-auto-save-files t)	;delete auto save files when emacs is closed
+    (setq backup-inhibited t);do not create backup files
+    (setq delete-auto-save-files t);delete auto save files when emacs is closed
     )
   (progn
-    (show-paren-mode 1)			;hilight a set of ()
+    (show-paren-mode 1);hilight a set of ()
     (setq show-paren-delay 0) ;the delay until a set of () is highlighted
-    (set-face-background 'show-paren-match-face "RoyalBlue1")
-    (set-face-background 'show-paren-mismatch-face "Red")
-    (set-face-foreground 'show-paren-mismatch-face "black"))
-  (which-function-mode 1)
-  (setq kill-whole-line t)
-  (setq-default indent-tabs-mode nil)	;use space instead of tab
-  (setq-default transient-mark-mode t)	;hilight a selection
-  (setq windmove-wrap-around t)
+    )
+  (setq-default indent-tabs-mode nil);use space instead of tab
+  (setq-default transient-mark-mode t);hilight a selection
   (setq-default show-trailing-whitespace t)
-  (progn                                ;font setting
-    ;; See http://homepage1.nifty.com/blankspace/emacs/color.html
-    (global-font-lock-mode t)
-    (setq font-lock-maximum-decoration t)
-    (setq fast-lock nil)
-    (setq lazy-lock nil)
-    (setq jit-lock t))
   (global-auto-revert-mode 1)           ;See http://maruta.be/emacs/12
   (setq-default bidi-display-reordering nil
                 bidi-paragraph-direction (quote left-to-right))
   (progn                                ;cua mode enable
     (cua-mode t)
     (setq cua-enable-cua-keys nil))
-  (let ((fn "/tmp/shellenv.el"))        ;load environment value
-    ;; See http://d.hatena.ne.jp/syohex/20111117/1321503477
-    (when (file-exists-p fn)
-      (load-file (expand-file-name "/tmp/shellenv.el"))
-      (dolist (path (reverse (split-string (getenv "PATH") ":")))
-        (add-to-list 'exec-path path))))
-  (cd (decode-coding-string default-directory file-name-coding-system)) ;Japanese setting. is it nesessary?
-  ;; clipboard
-  (if (display-graphic-p)
-      (progn
-        ;; if on window-system
-        (setq x-select-enable-clipboard t)
-        (global-set-key [(C y)] 'x-clipboard-yank))
-    ;; else (on terminal)
-    (setq interprogram-paste-function
-          #'(lambda ()
-              (shell-command-to-string "xsel -b -o")))
-    (setq interprogram-cut-function
-          #'(lambda (text &optional rest)
-              (let* ((process-connection-type nil)
-                     (proc (start-process "xsel" "*Messages*" "xsel" "-b" "-i")))
-                (process-send-string proc text)
-                (process-send-eof proc)))))
   )
 
 
@@ -143,7 +95,6 @@
     )
 
   ;; Load the library and start it up
-  ;; (if (file-exists-p (concat (getenv "HOME") "/ros"))
   (if (getenv "ROS_DISTRO")
       (when (require 'rosemacs nil t)
         (invoke-rosemacs)
@@ -153,12 +104,6 @@
     ;(setq auto-async-byte-compile-exclude-files-regexp "init.el")
     (add-hook 'emacs-lisp-mode-hook 'enable-auto-async-byte-compile-mode))
 
-  (when (require 'undohist nil t) (undohist-initialize) (setq undohist-directory "/tmp/"))
-  (when (require 'undo-tree nil t) (global-undo-tree-mode)) ;C-x u
-  (when (require 'popwin nil t)
-    ;; (add-to-list 'display-buffer-alist 'popwin:display-buffer)
-    (setq display-buffer-function 'popwin:display-buffer)
-    (add-to-list 'popwin:special-display-config '("^\*helm .+\*$" :regexp t :height 0.2)))
   (when (require 'uniquify nil t) (setq uniquify-buffer-name-style 'post-forward-angle-brackets))
   (when (require 'multi-term nil t) (setq multi-term-program "/bin/bash"))
   )
@@ -175,6 +120,7 @@
   (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
   (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
   (add-to-list 'auto-mode-alist '("\\.html\\'" . html-mode))
+  (add-to-list 'auto-mode-alist '("\\.ino" . c++-mode))
 
   ;; shell mode
   (progn
@@ -216,7 +162,6 @@
   (global-set-key [(C q)] #'(lambda (n) (interactive "p") (cond ((looking-at "\\s\(") (forward-list 1) (backward-char 1)) ((looking-at "\\s\)") (forward-char 1) (backward-list 1)))))
   (global-set-key [(C x) (b)] 'helm-for-files)
   ;; (global-set-key [(C x) (C f)] 'helm-find-files)
-  (global-set-key [(M x)] 'helm-M-x)
   (global-set-key [(M y)] 'helm-show-kill-ring)
   )
 

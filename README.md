@@ -12,7 +12,6 @@ required emacs lisps
 * helm
 * helm-descbinds
 * markdown-mode
-* melpa
 * multi-term
 * popup
 * popwin
