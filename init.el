@@ -39,6 +39,25 @@
     (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
     (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
     (package-initialize)                ;call this function before use elpa el such as tabbar
+    (defvar my/favorite-packages
+      '(
+        auto-async-byte-compile
+        auto-complete
+        dired+
+        helm
+        helm-descbinds
+        markdown-mode
+        multi-term
+        popup
+        popwin
+        tabbar
+        undo-tree
+        undohist
+        wgrep
+        ))
+    (dolist (package my/favorite-packages)
+      (unless (package-installed-p package)
+        (package-install package)))
     )
 
   (when (require 'tabbar nil t)
