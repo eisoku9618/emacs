@@ -55,9 +55,14 @@
         undohist
         wgrep
         ))
-    (dolist (package my/favorite-packages)
-      (unless (package-installed-p package)
-        (package-install package)))
+    (let (f)
+      (dolist (package my/favorite-packages)
+        (unless (package-installed-p package)
+	  (if (null f)
+	      (progn
+		(package-refresh-contents)
+		(setq f t)))
+	  (package-install package))))
     )
 
   (when (require 'tabbar nil t)
