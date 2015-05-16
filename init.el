@@ -113,10 +113,10 @@
 
   ;; helm
   (when (require 'helm-descbinds nil t) (helm-descbinds-mode))
-  (when (require 'auto-complete nil t)
-    (global-auto-complete-mode t)
-    ;; (setq ac-modes (cons 'lisp-mode ac-modes))
-    )
+  ;; (when (require 'auto-complete nil t)
+  ;;   (global-auto-complete-mode t)
+  ;;   ;; (setq ac-modes (cons 'lisp-mode ac-modes))
+  ;;   )
 
   ;; Load the library and start it up
   (if (getenv "ROS_DISTRO")
