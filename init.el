@@ -187,6 +187,7 @@
   (global-set-key [(C x) (b)] 'helm-for-files)
   ;; (global-set-key [(C x) (C f)] 'helm-find-files)
   (global-set-key [(M y)] 'helm-show-kill-ring)
+  (global-set-key [(C o)] 'dabbrev-expand)
   )
 
 ;; fix emacs bag
