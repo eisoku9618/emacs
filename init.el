@@ -120,7 +120,7 @@
 
   ;; Load the library and start it up
   (if (getenv "ROS_DISTRO")
-      (if (eq (getenv "ROS_DISTRO") 'indigo)
+      (if (string= (getenv "ROS_DISTRO") 'indigo)
           (progn
             (add-to-list 'load-path "/opt/ros/indigo/share/emacs/site-lisp")
             (require 'rosemacs-config nil t))
