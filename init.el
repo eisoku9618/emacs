@@ -2,7 +2,7 @@
 (progn
   (setq inhibit-startup-message t)
   (setq inhibit-splash-screen t)
-  (tool-bar-mode 0)
+  ;; (tool-bar-mode 0)
   (menu-bar-mode -1)
   (progn
     (setq visible-bell t)
@@ -54,6 +54,7 @@
         undo-tree
         undohist
         wgrep
+        yaml-mode
         ))
     (let (f)
       (dolist (package my/favorite-packages)
