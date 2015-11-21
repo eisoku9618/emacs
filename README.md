@@ -19,6 +19,7 @@ required emacs lisps
 * undo-tree
 * undohist
 * wgrep
+* yaml-mode
 
 # downloaded by my self
 * rosemacs
