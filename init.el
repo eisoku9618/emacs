@@ -121,13 +121,9 @@
 
   ;; Load the library and start it up
   (if (getenv "ROS_DISTRO")
-      (if (string= (getenv "ROS_DISTRO") 'indigo)
-          (progn
-            (add-to-list 'load-path "/opt/ros/indigo/share/emacs/site-lisp")
-            (require 'rosemacs-config nil t))
-        (when (require 'rosemacs nil t)
-          (invoke-rosemacs)
-          (global-set-key [(C x) (C r)] ros-keymap))))
+      (progn
+        (add-to-list 'load-path (format "/opt/ros/%s/share/emacs/site-lisp" (getenv "ROS_DISTRO")))
+        (require 'rosemacs-config nil t)))
 
   (when (require 'auto-async-byte-compile nil t)
     ;(setq auto-async-byte-compile-exclude-files-regexp "init.el")
