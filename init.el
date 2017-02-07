@@ -92,24 +92,6 @@
     (dolist (btn '(tabbar-buffer-home-button tabbar-scroll-left-button tabbar-scroll-right-button))
       (set btn (cons (cons "" nil)
                      (cons "" nil))))
-    ;; color setting
-    (setq tabbar-background-color (face-attribute 'mode-line-inactive :background))
-    (set-face-attribute
-     'tabbar-default nil
-     :family (face-attribute 'default :family)
-     :background (face-attribute 'mode-line-inactive :foreground)
-     :foreground (face-attribute 'mode-line-inactive :background)
-     )
-    (set-face-attribute
-     'tabbar-unselected nil
-     :background (face-attribute 'mode-line-inactive :background)
-     :foreground (face-attribute 'mode-line-inactive :foreground)
-     :box nil)
-    (set-face-attribute
-     'tabbar-selected nil
-     :background "cyan"
-     :foreground "black"
-     :box nil)
     )
 
   ;; helm
