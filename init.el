@@ -37,6 +37,7 @@
 (progn
   ;; See http://d.hatena.ne.jp/m-hiyama/20081128/1227855376
   (when (require 'package nil t)
+    (defvar package-archives)
     (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
     (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
     (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
@@ -166,8 +167,8 @@
   ;; Timestamp
   ;; See http://stackoverflow.com/questions/1250846/wrong-type-argument-commandp-error-when-binding-a-lambda-to-a-key
   (global-set-key [(C c) (C d)] #'(lambda () (interactive) (insert (current-time-string))))
-  (global-set-key [(M p)] #'(lambda (n) (interactive "p") (previous-line n) (scroll-down n)))
-  (global-set-key [(M n)] #'(lambda (n) (interactive "p") (next-line n) (scroll-up n)))
+  (global-set-key [(M p)] #'(lambda (n) (interactive "p") (forward-line (* -1 n)) (scroll-down n)))
+  (global-set-key [(M n)] #'(lambda (n) (interactive "p") (forward-line n) (scroll-up n)))
   (global-set-key [(C q)] #'(lambda (n) (interactive "p") (cond ((looking-at "\\s\(") (forward-list 1) (backward-char 1)) ((looking-at "\\s\)") (forward-char 1) (backward-list 1)))))
   (global-set-key [(C x) (b)] 'helm-for-files)
   ;; (global-set-key [(C x) (C f)] 'helm-find-files)
