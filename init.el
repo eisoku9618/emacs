@@ -28,6 +28,8 @@
   (progn                                ;cua mode enable
     (cua-mode t)
     (setq cua-enable-cua-keys nil))
+
+  (load-theme 'wheatgrass)
   )
 
 
