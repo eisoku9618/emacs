@@ -111,7 +111,7 @@
         (require 'rosemacs-config nil t)))
 
   (when (require 'auto-async-byte-compile nil t)
-    ;(setq auto-async-byte-compile-exclude-files-regexp "init.el")
+                                        ;(setq auto-async-byte-compile-exclude-files-regexp "init.el")
     (add-hook 'emacs-lisp-mode-hook 'enable-auto-async-byte-compile-mode))
 
   (when (require 'uniquify nil t) (setq uniquify-buffer-name-style 'post-forward-angle-brackets))
