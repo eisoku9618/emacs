@@ -148,13 +148,13 @@
     (add-to-list 'auto-mode-alist '("\\.wrl\\'" . vrml-mode))
     )
 
-  (add-hook 'c-mode-common-hook
-            #'(lambda ()
-                (define-key c++-mode-map "/" 'self-insert-command)
-                (setq comment-style 'extra-line)
-                (setq comment-continue " * ")
-                (setq comment-start "/* ")
-                (setq comment-end " */")))
+  ;; (add-hook 'c-mode-common-hook
+  ;;           #'(lambda ()
+  ;;               (define-key c++-mode-map "/" 'self-insert-command)
+  ;;               (setq comment-style 'extra-line)
+  ;;               (setq comment-continue " * ")
+  ;;               (setq comment-start "/* ")
+  ;;               (setq comment-end " */")))
   )
 
 
