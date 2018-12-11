@@ -39,14 +39,12 @@
   (when (require 'package nil t)
     (defvar package-archives)
     (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
-    (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
     (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
     (package-initialize)                ;call this function before use elpa el such as tabbar
     (defvar my/favorite-packages
       '(
         auto-async-byte-compile
         auto-complete
-        dired+
         helm
         helm-descbinds
         markdown-mode
@@ -58,6 +56,7 @@
         undohist
         wgrep
         yaml-mode
+        cmake-mode
         ))
     (let (f)
       (dolist (package my/favorite-packages)
