@@ -208,4 +208,6 @@
 ;; UTF-8 : put these lines at the end of init.el
 (progn
   (prefer-coding-system 'utf-8)
-  (set-default-coding-systems 'utf-8))
+  (set-file-name-coding-system 'utf-8)
+  (set-keyboard-coding-system 'utf-8)
+  (set-terminal-coding-system 'utf-8))
