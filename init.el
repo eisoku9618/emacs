@@ -52,8 +52,6 @@
         popup
         popwin
         tabbar
-        undo-tree
-        undohist
         wgrep
         yaml-mode
         cmake-mode
