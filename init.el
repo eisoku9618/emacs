@@ -38,7 +38,7 @@
   ;; See http://d.hatena.ne.jp/m-hiyama/20081128/1227855376
   (when (require 'package nil t)
     (defvar package-archives)
-    (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+    (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
     (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
     (package-initialize)                ;call this function before use elpa el such as tabbar
     (defvar my/favorite-packages
