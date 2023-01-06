@@ -55,6 +55,7 @@
         wgrep
         yaml-mode
         cmake-mode
+        flycheck-pyflakes
         ))
     (let (f)
       (dolist (package my/favorite-packages)
@@ -113,6 +114,14 @@
 
   (when (require 'uniquify nil t) (setq uniquify-buffer-name-style 'post-forward-angle-brackets))
   (when (require 'multi-term nil t) (setq multi-term-program "/bin/bash"))
+  (when (require 'flycheck-pyflakes nil t)
+    (flycheck-add-next-checker 'python-pyflakes 'python-flake8)
+    (flycheck-add-next-checker 'python-pyflakes 'python-pycompile)
+    (add-hook 'python-mode-hook
+              #'(lambda ()
+                  (flycheck-mode)
+                  (add-to-list 'flycheck-disabled-checkers 'python-mypy)))
+    )
   )
 
 ;; about mode
