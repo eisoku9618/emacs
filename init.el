@@ -161,6 +161,13 @@
   ;;               (setq comment-continue " * ")
   ;;               (setq comment-start "/* ")
   ;;               (setq comment-end " */")))
+  (add-hook 'c-mode-common-hook
+            #'(lambda ()
+                (c-set-style "cc-mode")
+                (c-set-offset 'statement-cont 'c-lineup-math)
+                (c-set-offset 'member-init-cont '/)
+                )
+            )
   )
 
 
