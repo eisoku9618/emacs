@@ -44,7 +44,6 @@
     (defvar my/favorite-packages
       '(
         auto-async-byte-compile
-        auto-complete
         helm
         helm-descbinds
         markdown-mode
@@ -97,10 +96,6 @@
 
   ;; helm
   (when (require 'helm-descbinds nil t) (helm-descbinds-mode))
-  ;; (when (require 'auto-complete nil t)
-  ;;   (global-auto-complete-mode t)
-  ;;   ;; (setq ac-modes (cons 'lisp-mode ac-modes))
-  ;;   )
 
   ;; Load the library and start it up
   (if (getenv "ROS_DISTRO")
@@ -175,7 +170,6 @@
 ;; See http://d.hatena.ne.jp/tomoya/20090415/1239809615
 (progn
   (global-set-key [(C h)] 'backward-delete-char)
-  (global-set-key [(M g)] 'goto-line)
   (global-set-key [(C x) (C b)] 'bs-show)
   ;; Timestamp
   ;; See http://stackoverflow.com/questions/1250846/wrong-type-argument-commandp-error-when-binding-a-lambda-to-a-key
@@ -188,11 +182,6 @@
   (global-set-key [(M y)] 'helm-show-kill-ring)
   (global-set-key [(C o)] 'dabbrev-expand)
   )
-
-;; fix emacs bag
-(defadvice terminal-init-xterm (after fix-some-keys activate)
-  (define-key input-decode-map "\e[1;2A" [S-up])
-  (define-key input-decode-map "\e[4~" [end]))
 
 ;; for *scratch*
 (progn
