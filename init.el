@@ -50,7 +50,6 @@
         multi-term
         popup
         popwin
-        tabbar
         wgrep
         yaml-mode
         cmake-mode
@@ -64,34 +63,6 @@
 		(package-refresh-contents)
 		(setq f t)))
 	  (package-install package))))
-    )
-
-  (when (require 'tabbar nil t)
-    (tabbar-mode)
-    (setq tabbar-buffer-list-function
-          #'(lambda ()
-              (delq nil
-                    (mapcar #'(lambda (b)
-                                (cond
-                                 ((eq (current-buffer) b) b)
-                                 ((buffer-file-name b) b)
-                                 ((char-equal ?\ (aref (buffer-name b) 0)) nil)
-                                 ((equal "*scratch*" (buffer-name b)) b)
-                                 ((string-match "*shell" (buffer-name b)) b)
-                                 ((string-match "*terminal" (buffer-name b)) b)
-                                 ((char-equal ?* (aref (buffer-name b) 0)) nil)
-                                 ((buffer-live-p b) b)))
-                            (buffer-list)))))
-    ;; (global-set-key [(C M f)] 'tabbar-forward)
-    ;; (global-set-key [(C M b)] 'tabbar-backward)
-    (global-set-key [(M right)] 'tabbar-forward)
-    (global-set-key [(M left)] 'tabbar-backward)
-    (tabbar-mwheel-mode nil)
-    (setq tabbar-buffer-groups-function nil)
-    (setq tabbar-separator '(1.5))
-    (dolist (btn '(tabbar-buffer-home-button tabbar-scroll-left-button tabbar-scroll-right-button))
-      (set btn (cons (cons "" nil)
-                     (cons "" nil))))
     )
 
   ;; helm
@@ -117,6 +88,63 @@
                   (flycheck-mode)
                   (add-to-list 'flycheck-disabled-checkers 'python-mypy)))
     )
+  )
+
+(progn
+  (global-tab-line-mode 1)
+  (setq-default tab-line-format '(:eval (tab-line-format)))
+  (setq tab-line-new-button-show nil)
+  (setq tab-line-close-button-show nil)
+  (global-set-key [(M right)] #'tab-line-switch-to-next-tab)
+  (global-set-key [(M left)]  #'tab-line-switch-to-prev-tab)
+
+  ;; Return non-nil if buffer B should be shown in the tab line.
+  ;;
+  ;; Policy:
+  ;; - Always show the current buffer, even if it is usually hidden.
+  ;; - Show normal file-visiting buffers.
+  ;; - Always show a few explicitly allowed special buffers such as *scratch*, *shell*, and *terminal*.
+  ;; - Hide internal buffers whose names start with a space.
+  ;; - Hide other *...* special buffers by default, unless they are the current buffer.
+  (defun my/tab-line-include-buffer-p (b)
+    (let ((name (buffer-name b)))
+      (cond
+       ((eq b (current-buffer)) t)
+       ((not (buffer-live-p b)) nil)
+       ((buffer-file-name b) t)
+       ((equal "*scratch*" name) t)
+       ((string-match-p "\\*shell" name) t)
+       ((string-match-p "\\*terminal" name) t)
+       ((and name (> (length name) 0) (char-equal ?\s (aref name 0))) nil)
+       ((and name (> (length name) 0) (char-equal ?* (aref name 0))) nil)
+       (t t))))
+
+  (defvar my/tab-line-ordered-buffers nil)
+
+  (defun my/tab-line-track-buffer ()
+    (when (my/tab-line-include-buffer-p (current-buffer))
+      (unless (memq (current-buffer) my/tab-line-ordered-buffers)
+        (setq my/tab-line-ordered-buffers
+              (append my/tab-line-ordered-buffers (list (current-buffer)))))))
+
+  (defun my/tab-line-untrack-buffer ()
+    (setq my/tab-line-ordered-buffers
+          (delq (current-buffer) my/tab-line-ordered-buffers)))
+
+  (defun my/tab-line-buffer-list ()
+    (setq my/tab-line-ordered-buffers
+          (delq nil
+                (mapcar (lambda (b)
+                          (and (buffer-live-p b)
+                               (or (eq b (current-buffer))
+                                   (my/tab-line-include-buffer-p b))
+                               b))
+                        my/tab-line-ordered-buffers)))
+    my/tab-line-ordered-buffers)
+
+  (setq tab-line-tabs-function #'my/tab-line-buffer-list)
+  (add-hook 'buffer-list-update-hook #'my/tab-line-track-buffer)
+  (add-hook 'kill-buffer-hook #'my/tab-line-untrack-buffer)
   )
 
 ;; about mode
